@@ -37,7 +37,7 @@ namespace Quazicrystal
 				steps += 1;
 			}
 
-			IEnumerable<int> rangeSteps = Enumerable.Range(0, steps).Select(n => n * steps);
+			IEnumerable<int> rangeSteps = Enumerable.Range(0, steps);
 
 			counter = 0;
 			uid = (int)(DateTime.UtcNow.ToFileTimeUtc() % 1000);
