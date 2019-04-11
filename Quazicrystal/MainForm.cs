@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 
 namespace Quazicrystal
 {
@@ -23,10 +24,12 @@ namespace Quazicrystal
 
 		private void btnGenerate_Click(object sender, EventArgs e)
 		{
+			int pow = 1;
 			double symmetries = double.Parse(tbSymmetries.Text);
-
-			int range = int.Parse(tbSize.Text);
 			double scale = double.Parse(tbScale.Text);
+
+			int size = int.Parse(tbSize.Text);
+			int range = size / 2;
 
 			int steps = (int)Math.Truncate(symmetries);
 			if (symmetries % 1 != 0)
@@ -34,9 +37,10 @@ namespace Quazicrystal
 				steps += 1;
 			}
 
-			int pow = 1;
+			IEnumerable<int> rangeSteps = Enumerable.Range(0, steps).Select(n => n * steps);
 
-			IEnumerable<int> rangeSteps = Enumerable.Range(0, steps).Select(n => n*steps);
+			counter = 0;
+			uid = (int)(DateTime.UtcNow.ToFileTimeUtc() % 1000);
 
 			List<Task<Bitmap>> tasks =
 				rangeSteps.Select(step =>
@@ -45,8 +49,8 @@ namespace Quazicrystal
 						proc.ContinueWith((t) => SetPicturebox(t.Result));
 						return proc;
 					}).ToList();
-			
-			Task runner = new Task(() => 
+
+			Task runner = new Task(() =>
 			{
 				foreach (Task<Bitmap> tsk in tasks)
 				{
@@ -58,6 +62,9 @@ namespace Quazicrystal
 
 		}
 
+
+		private static int counter = 0;
+		private static int uid = 0;
 		private void SetPicturebox(Bitmap image)
 		{
 			if (pictureBox1.InvokeRequired)
@@ -67,6 +74,7 @@ namespace Quazicrystal
 			else
 			{
 				pictureBox1.Image = image;
+				image.Save($"Quasicrystal_{tbSymmetries.Text}FoldSymmetry_{image.Width}X{image.Height}_{uid}_{(++counter)}of{tbSymmetries.Text}.png", ImageFormat.Png);
 			}
 		}
 	}

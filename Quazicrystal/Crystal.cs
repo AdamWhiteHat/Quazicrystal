@@ -23,7 +23,7 @@ namespace Quazicrystal
 			IEnumerable<double> rangeTheta = Enumerable.Range(0, trunc).Select(i => angle * i);
 			List<Tuple<double, double>> precalculatedTheta = rangeTheta.Select(t => new Tuple<double, double>(Math.Sin(t), (Math.Cos(t)))).ToList();
 
-			int xOffset = range;
+			int xOffset = -range;
 			int yOffset = -range;
 
 			IEnumerable<int> rangeX = Enumerable.Range(xOffset, range * 2); // 2000, 6000
