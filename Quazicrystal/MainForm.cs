@@ -18,7 +18,7 @@ namespace Quazicrystal
 		{
 			InitializeComponent();
 			tbSymmetries.Text = "7";
-			tbSize.Text = "200";
+			tbSize.Text = "400";
 			tbScale.Text = "1.0";
 		}
 
