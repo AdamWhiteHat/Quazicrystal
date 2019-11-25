@@ -13,18 +13,18 @@ This application generates images such as these:
 
 But wait, theres more!
 
-It doesnt generate just one of these images
+It doesnt generate just one of these images, it generates several that you can compose together to make an animation.
 
-A n-fold symmetry quazi crystal generates n frames. Combine them with a free online gif making service (or write your own routine in C#) and you can make animated gifs like this:
+A n-fold rotational quazi crystal generates n frames. Combine them with a free online gif making service (or write your own routine in C#) and you can make animated gifs like this:
 
 
 ![Animated Quazicrystal GIF](https://raw.githubusercontent.com/AdamWhiteHat/Quazicrystal/master/Quasicrystal_7FoldSym.gif "Animated gif")
 
-The above is an example of 7-fold rotational symmetry. Each frame is one of the 7 different rotations.
+The above is an example of 7-fold rotational quazicrystal. Each frame is rotated 1/7th of a full 360 degree rotation.
 
 
 
-Here is a quazicrystal with 5-fold symmetry:
+Here is a quazicrystal with 5 rotations about the axis:
 
 
 ![5-fold symmetry quazicrystal](https://raw.githubusercontent.com/AdamWhiteHat/Quazicrystal/master/Quasicrystal_5FoldSym.gif "5-fold symmetry quazicrystal")
@@ -32,7 +32,7 @@ Here is a quazicrystal with 5-fold symmetry:
 
 
 
-Technically, quazicrystals are rotations of order different from 1, 2, 3, 4 and 6. Any symmetries different from 1, 2, 3, 4 or 6 were once considered forbidden, that is, not able to be found in nature.
+Technically, quazicrystals are rotations of order different from 1, 2, 3, 4 and 6. Any n-fold rotation count about the axis different from 1, 2, 3, 4 or 6 were once considered forbidden, that is, not able to be found in nature.
 
 
 
