@@ -24,6 +24,11 @@ namespace Quazicrystal
 
 		private void btnGenerate_Click(object sender, EventArgs e)
 		{
+			GenerateQuazicrystal();
+		}
+
+		private void GenerateQuazicrystal()
+		{
 			int pow = 1;
 			double symmetries = double.Parse(tbSymmetries.Text);
 			double scale = double.Parse(tbScale.Text);
@@ -50,6 +55,8 @@ namespace Quazicrystal
 						return proc;
 					}).ToList();
 
+			SetResizable(false);
+
 			Task runner = new Task(() =>
 			{
 				foreach (Task<Bitmap> tsk in tasks)
@@ -57,9 +64,9 @@ namespace Quazicrystal
 					tsk.Start();
 					tsk.Wait();
 				}
+				SetResizable(true);
 			});
 			runner.Start();
-
 		}
 
 
@@ -74,7 +81,73 @@ namespace Quazicrystal
 			else
 			{
 				pictureBox1.Image = image;
-				image.Save($"Quasicrystal_{tbSymmetries.Text}FoldSymmetry_{image.Width}X{image.Height}_{uid}_{(++counter)}of{tbSymmetries.Text}.png", ImageFormat.Png);
+
+
+				//ImageCodecInfo bmpCodec = ImageCodecInfo.GetImageEncoders()[0];
+				//if (bmpCodec != null)
+				//{
+				//	EncoderParameters parameters = new EncoderParameters();
+				//	parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.ColorDepth, 8);
+
+					image.Save($"Quasicrystal{uid}_{tbSymmetries.Text}-FoldSymmetry_{image.Width}x{image.Height}_@{tbScale.Text}X_{(++counter)}of{tbSymmetries.Text}.bmp", ImageFormat.Bmp);
+				//}
+				
+			}
+		}
+
+		private void SetResizable(bool allowResize)
+		{
+			if (this.InvokeRequired)
+			{
+				this.Invoke(new Action(() => SetResizable(allowResize)));
+			}
+			else
+			{
+				
+				this.SizeGripStyle = allowResize ? SizeGripStyle.Show : SizeGripStyle.Hide;
+
+				if (allowResize)
+				{
+					this.WindowState = FormWindowState.Normal;
+
+					Size formSize = this.Size;
+					Size tableSize = tableLayoutPanel1.Size;
+					Size pictureSize = pictureBox1.Size;
+
+					this.AutoSize = false;
+					this.Size = formSize;
+
+					tableLayoutPanel1.AutoSize = false;
+					tableLayoutPanel1.Size = tableSize;
+					tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+					pictureBox1.Dock = DockStyle.None;
+					pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+					pictureBox1.Size = pictureSize;
+					pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+				}
+				else
+				{
+					pictureBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+					tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+
+					tableLayoutPanel1.AutoSize = true;
+					this.AutoSize = true;
+
+					pictureBox1.Dock = DockStyle.Fill;
+					pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+
+				}
+
+			}
+		}
+
+		private void textbox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				GenerateQuazicrystal();
 			}
 		}
 	}

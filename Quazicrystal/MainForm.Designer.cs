@@ -59,6 +59,7 @@
 			this.tbSymmetries.Name = "tbSymmetries";
 			this.tbSymmetries.Size = new System.Drawing.Size(100, 20);
 			this.tbSymmetries.TabIndex = 1;
+			this.tbSymmetries.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_KeyDown);
 			// 
 			// tbSize
 			// 
@@ -66,6 +67,7 @@
 			this.tbSize.Name = "tbSize";
 			this.tbSize.Size = new System.Drawing.Size(100, 20);
 			this.tbSize.TabIndex = 2;
+			this.tbSize.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_KeyDown);
 			// 
 			// tbScale
 			// 
@@ -73,6 +75,7 @@
 			this.tbScale.Name = "tbScale";
 			this.tbScale.Size = new System.Drawing.Size(100, 20);
 			this.tbScale.TabIndex = 3;
+			this.tbScale.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textbox_KeyDown);
 			// 
 			// label1
 			// 
