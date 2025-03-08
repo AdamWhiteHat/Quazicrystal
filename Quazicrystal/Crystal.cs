@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Quazicrystal
 {
 	public static class Crystal
 	{
-		public static List<Tuple<int, int, int>> Get(double scale, double symmetries, int pow, int range, int step)
+		public static List<Tuple<int, int, int>> Get(double symmetries, int pow, Size size, Point offset, int step, double scale)
 		{
 			double angle = Math.Pow(Math.PI, pow) / symmetries;
 			//(Math.PI*2)
@@ -23,11 +24,8 @@ namespace Quazicrystal
 			IEnumerable<double> rangeTheta = Enumerable.Range(0, trunc).Select(i => angle * i);
 			List<Tuple<double, double>> precalculatedTheta = rangeTheta.Select(t => new Tuple<double, double>(Math.Sin(t), (Math.Cos(t)))).ToList();
 
-			int xOffset = -range;
-			int yOffset = -range;
-
-			IEnumerable<int> rangeX = Enumerable.Range(xOffset, range * 2); // 2000, 6000
-			List<int> rangeY = Enumerable.Range(yOffset, range * 2).ToList();
+			IEnumerable<int> rangeX = Enumerable.Range(offset.X, size.Height); // 2000, 6000
+			List<int> rangeY = Enumerable.Range(offset.Y, size.Height).ToList();
 
 			// {int, int, int} => {x, y, amplitude} 
 			List<Tuple<int, int, int>> result =
@@ -35,8 +33,8 @@ namespace Quazicrystal
 					.SelectMany(x =>
 						rangeY.Select(y =>
 							new Tuple<int, int, int>(
-								x - xOffset,
-								y - yOffset,
+								x - offset.X,
+								y - offset.Y,
 								Picture.ColorFunction(precalculatedTheta.Select(theta => WaveFunction(scale, theta.Item1, theta.Item2, x, y, step)).Sum())
 							)
 						)
